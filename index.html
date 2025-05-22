@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CV Maker for Young Students</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+
+        .container {
+            width: 80%;
+            margin: 20px auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            color: #007bff;
+        }
+
+        h2 {
+            color: #007bff;
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 5px;
+            margin-top: 20px;
+        }
+
+        label {
+            display: block;
+            margin-top: 10px;
+            font-weight: bold;
+        }
+
+        input[type="text"],
+        textarea {
+            width: 100%;
+            padding: 8px;
+            margin-top: 5px;
+            margin-bottom: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box; /* Important for padding */
+        }
+
+        textarea {
+            height: 100px;
+            resize: vertical;
+        }
+
+        button {
+            background-color: #007bff;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-top: 20px;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        #cv-preview {
+            margin-top: 30px;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            background-color: #f9f9f9;
+            line-height: 1.6;
+        }
+
+        #cv-preview h2 {
+            color: #007bff;
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 5px;
+            margin-top: 10px; /* Reduced top margin for better spacing */
+        }
+
+        #cv-preview p, #cv-preview ul {
+            margin-bottom: 10px;
+        }
+
+        ul {
+            padding-left: 20px;
+        }
+
+        /* Responsive Design (adjust as needed) */
+        @media (max-width: 768px) {
+            .container {
+                width: 95%;
+                padding: 10px;
+            }
+        }
+
+        .profile-picture {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-bottom: 10px;
+        }
+
+        #profile-image-input {
+            margin-top: 5px;
+            margin-bottom: 10px;
+        }
+
+        .download-button {
+            background-color: #28a745; /* Green color for download */
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-top: 20px;
+            text-decoration: none; /* Remove underline from the link */
+            display: inline-block; /* To make it a block-level element */
+        }
+
+        .download-button:hover {
+            background-color: #218838; /* Darker green on hover */
+        }
+
+        .section-header {
+            color: #007bff;
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 5px;
+            margin-top: 20px;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>CV Maker</h1>
+
+        <label for="profile-image-input">Profile Picture (Optional):</label>
+        <input type="file" id="profile-image-input" accept="image/*">
+        <img id="profile-picture-preview" class="profile-picture" src="#" alt="Profile Picture Preview" style="display: none;">
+
+        <label for="name">Name:</label>
+        <input type="text" id="name" placeholder="Your Name">
+
+        <label for="email">Email:</label>
+        <input type="text" id="email" placeholder="Your Email">
+
+        <label for="phone">Phone:</label>
+        <input type="text" id="phone" placeholder="Your Phone Number">
+
+        <label for="address">Address:</label>
+        <input type="text" id="address" placeholder="Your Address">
+
+        <label for="summary">Summary/Objective:</label>
+        <textarea id="summary" placeholder="A brief introduction about yourself"></textarea>
+
+        <h2>Education</h2>
+        <label for="education">School Name:</label>
+        <input type="text" id="school" placeholder="School Name">
+
+        <label for="degree">Degree/Certificate:</label>
+        <input type="text" id="degree" placeholder="e.g., High School Diploma, GCSEs">
+
+        <label for="graduation-year">Graduation Year:</label>
+        <input type="text" id="graduation-year" placeholder="Year of Graduation">
+
+        <h2>Skills</h2>
+        <label for="skills">Skills (separate with commas):</label>
+        <input type="text" id="skills" placeholder="e.g., Communication, Teamwork, Problem-solving">
+
+        <h2>Experience (Optional)</h2>
+        <label for="experience">Experience/Volunteer Work:</label>
+        <textarea id="experience" placeholder="Describe any experience or volunteer work"></textarea>
+
+        <h2>Projects (Optional)</h2>
+        <label for="projects">Projects:</label>
+        <textarea id="projects" placeholder="Describe any projects you have worked on"></textarea>
+
+        <button onclick="generateCV()">Generate CV</button>
+
+        <div id="cv-preview">
+            <h2>CV Preview</h2>
+            <!-- CV content will be dynamically generated here -->
+        </div>
+
+        <a id="download-link" class="download-button" href="#" download="cv.txt" style="display:none;">Download CV</a>
+
+    </div>
+
+    <script>
+        function generateCV() {
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const phone = document.getElementById('phone').value;
+            const address = document.getElementById('address').value;
+            const summary = document.getElementById('summary').value;
+            const school = document.getElementById('school').value;
+            const degree = document.getElementById('degree').value;
+            const graduationYear = document.getElementById('graduation-year').value;
+            const skills = document.getElementById('skills').value;
+            const experience = document.getElementById('experience').value;
+            const projects = document.getElementById('projects').value;
+            const profilePictureSrc = document.getElementById('profile-picture-preview').src;
+
+            let cvContent = '';
+
+            if (profilePictureSrc && profilePictureSrc !== "#") {
+                 cvContent += `<img src="${profilePictureSrc}" alt="Profile Picture" style="width: 100px; height: 100px; border-radius: 50%; object-fit: cover;">\n\n`;
+            }
+
+            cvContent += `<h2>${name}</h2>\n`;
+            cvContent += `<p>Email: ${email}</p>\n`;
+            cvContent += `<p>Phone: ${phone}</p>\n`;
+            cvContent += `<p>Address: ${address}</p>\n\n`;
+
+            cvContent += `<h2 class="section-header">Summary</h2>\n`;
+            cvContent += `<p>${summary}</p>\n\n`;
+
+            cvContent += `<h2 class="section-header">Education</h2>\n`;
+            cvContent += `<p><strong>${school}</strong>, ${degree}</p>\n`;
+            cvContent += `<p>Graduation Year: ${graduationYear}</p>\n\n`;
+
+            cvContent += `<h2 class="section-header">Skills</h2>\n`;
+            const skillsList = skills.split(',').map(skill => skill.trim());
+            cvContent += '<ul>\n';
+            skillsList.forEach(skill => {
+                cvContent += `<li>${skill}</li>\n`;
+            });
+            cvContent += '</ul>\n\n';
+
+            if (experience) {
+                cvContent += `<h2 class="section-header">Experience</h2>\n`;
+                cvContent += `<p>${experience}</p>\n\n`;
+            }
+
+            if (projects) {
+                 cvContent += `<h2 class="section-header">Projects</h2>\n`;
+                 cvContent += `<p>${projects}</p>\n\n`;
+            }
+
+            document.getElementById('cv-preview').innerHTML = cvContent;
+
+            // Prepare for Download
+            const blob = new Blob([cvContent], { type: 'text/plain' });
+            const url = URL.createObjectURL(blob);
+            const downloadLink = document.getElementById('download-link');
+            downloadLink.href = url;
+            downloadLink.style.display = 'inline-block';  // Make the download link visible
+        }
+
+        // Image Preview Logic
+        document.getElementById('profile-image-input').addEventListener('change', function(event) {
+            const file = event.target.files[0];
+            const reader = new FileReader();
+
+            reader.onload = function(e) {
+                const profilePicturePreview = document.getElementById('profile-picture-preview');
+                profilePicturePreview.src = e.target.result;
+                profilePicturePreview.style.display = 'block';
+            }
+
+            if (file) {
+                reader.readAsDataURL(file);
+            } else {
+                document.getElementById('profile-picture-preview').src = "#";  // Reset the preview
+                document.getElementById('profile-picture-preview').style.display = 'none';
+            }
+        });
+
+    </script>
+</body>
+</html>
